@@ -1,0 +1,1067 @@
+basePath: /
+definitions:
+  model.Category:
+    properties:
+      category:
+        type: string
+      created_at:
+        type: string
+      devices:
+        items:
+          $ref: '#/definitions/model.Device'
+        type: array
+      id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  model.Device:
+    properties:
+      category:
+        $ref: '#/definitions/model.Category'
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      lineup:
+        type: string
+      links:
+        items:
+          $ref: '#/definitions/model.Link'
+        type: array
+      manufacturer:
+        type: string
+      release_date:
+        type: integer
+      reviews:
+        items:
+          $ref: '#/definitions/model.Review'
+        type: array
+      scores:
+        $ref: '#/definitions/model.Scores'
+      traits:
+        items:
+          $ref: '#/definitions/model.Trait'
+        type: array
+      type:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.Link:
+    properties:
+      created_at:
+        type: string
+      device_id:
+        type: integer
+      id:
+        type: integer
+      link:
+        type: string
+      store:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.Review:
+    properties:
+      created_at:
+        type: string
+      device:
+        $ref: '#/definitions/model.Device'
+      device_id:
+        type: integer
+      id:
+        type: integer
+      post:
+        type: string
+      score:
+        type: integer
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/model.User'
+      user_id:
+        type: integer
+    type: object
+  model.Scores:
+    properties:
+      crawler_score:
+        type: integer
+      created_at:
+        type: string
+      device_id:
+        type: integer
+      id:
+        type: integer
+      updated_at:
+        type: string
+      user_score:
+        type: integer
+    type: object
+  model.Trait:
+    properties:
+      context:
+        type: string
+      created_at:
+        type: string
+      devices:
+        items:
+          $ref: '#/definitions/model.Device'
+        type: array
+      id:
+        type: integer
+      trait:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/model.Review'
+        type: array
+      updated_at:
+        type: string
+      user_role:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact:
+    email: hanifrmn@pm.me
+    name: Mochammad Hanif R
+    url: http://www.github.com/etrnal70
+  description: API for Secondhand Glossary service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Secondhand Glossary API
+  version: "1.0"
+paths:
+  /category:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete category by id
+      tags:
+      - category
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Category'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all categories
+      tags:
+      - category
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new category
+      tags:
+      - category
+  /category/{category_id}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Device'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new device
+      tags:
+      - category
+  /device:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Device'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all device details
+      tags:
+      - device
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Device'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new device
+      tags:
+      - device
+  /device/{device_id}:
+    get:
+      parameters:
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Device'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get device by id
+      tags:
+      - device
+  /device/{device_id}/link:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Link'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all device's links
+      tags:
+      - device
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Link'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new device's link
+      tags:
+      - device
+  /device/{device_id}/link/{link_id}:
+    delete:
+      parameters:
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Review'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete device link by id
+      tags:
+      - device
+    get:
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: Device's Link ID
+        in: path
+        name: link_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Link'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get device's link by id
+      tags:
+      - device
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: Device's Link ID
+        in: path
+        name: link_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Link'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new device's review
+      tags:
+      - device
+  /device/{device_id}/review:
+    get:
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Review'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all device's reviews
+      tags:
+      - device
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Review'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new device's review
+      tags:
+      - device
+  /device/{device_id}/review/{review_id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: Device's Review ID
+        in: path
+        name: review_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete device's review by id
+      tags:
+      - device
+    get:
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: Device's Review ID
+        in: path
+        name: review_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Review'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get device's review by id
+      tags:
+      - device
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: Device's Review ID
+        in: path
+        name: review_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Review'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Edit device's review by id
+      tags:
+      - device
+  /device/{device_id}/score:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Scores'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update device's score
+      tags:
+      - device
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Scores'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update device's score
+      tags:
+      - device
+  /device/{device_id}/trait/{trait_id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: Device' Trait ID
+        in: path
+        name: trait_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete device's trait by id
+      tags:
+      - device
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      - description: DeviceTrait ID
+        in: path
+        name: trait_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Device'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add device's trait
+      tags:
+      - device
+  /device/{id}:
+    delete:
+      parameters:
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete device by id
+      tags:
+      - device
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Device'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Edit device by id
+      tags:
+      - device
+  /device/{id}/trait:
+    get:
+      parameters:
+      - description: Device ID
+        in: path
+        name: device_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Trait'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all device's traits
+      tags:
+      - device
+  /trait:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Trait'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all traits
+      tags:
+      - trait
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Trait'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add new trait
+      tags:
+      - trait
+  /trait/{trait_id}:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete trait by id
+      tags:
+      - trait
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Device'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all trait devices
+      tags:
+      - trait
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Trait'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Edit trait by id
+      tags:
+      - trait
+  /user:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all users
+      tags:
+      - user
+  /user/:user_id:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete user by id
+      tags:
+      - user
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login user
+      tags:
+      - user
+  /user/profile:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user profiles
+      tags:
+      - user
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register user
+      tags:
+      - user
+swagger: "2.0"

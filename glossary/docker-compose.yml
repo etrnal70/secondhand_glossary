@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  mongo:
+    image: "mongo:latest"
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME={MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+  redis:
+    image: "redis:latest"
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "6379:6379"
+  db:
+    container_name: rest_db
+    image: "mysql:latest"
+    restart: always
+    depends_on:
+      - redis
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    environment:
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    links:
+      - "mysql"
