@@ -1,13 +1,34 @@
 package logger
 
 import (
+	"context"
 	"fmt"
-	"net/http"
+	"secondhand_glossary/platform"
 	"time"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
+
+type mongoLogger struct {
+	client *mongo.Client
+}
+
+// io.Writer implementation
+func (m *mongoLogger) Write(p []byte) (n int, err error) {
+	c := m.client.Database("secondhand").Collection("logs")
+	fmt.Println(string(p))
+	_, err = c.InsertOne(context.TODO(), bson.M{
+		"msg": string(p),
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	return len(p), nil
+}
 
 func makeLogEntry(c echo.Context) *log.Entry {
 	if c == nil {
@@ -22,20 +43,9 @@ func makeLogEntry(c echo.Context) *log.Entry {
 		"ip":     c.Request().RemoteAddr,
 	})
 }
-func CustomHTTPErrorHandler(err error, c echo.Context) {
-    report, ok := err.(*echo.HTTPError)
-    if ok {
-        report.Message = fmt.Sprintf("http error %d - %v", report.Code, report.Message)
-    } else {
-        report = echo.NewHTTPError(http.StatusInternalServerError, err.Error())
-    }
 
-    makeLogEntry(c).Error(report.Message)
-    c.HTML(report.Code, report.Message.(string))
-}
-func LoggerMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		makeLogEntry(c).Info("incoming request")
-		return next(c)
+func NewLogger(p *platform.Connection) *mongoLogger {
+	return &mongoLogger{
+		client: p.Logger,
 	}
 }

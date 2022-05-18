@@ -7,6 +7,7 @@ import (
 	"secondhand_glossary/platform"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 // @title           Secondhand Glossary API
@@ -27,12 +28,14 @@ func main() {
 	conf := config.InitializeConfig()
 
 	e := echo.New()
-  e.Use(logger.LoggerMiddleware)
-  e.HTTPErrorHandler = logger.CustomHTTPErrorHandler
-	// g := e.Group("/")
 
 	platformConn := platform.InitPlatform(conf)
 	defer platformConn.Close()
+
+	logger := logger.NewLogger(platformConn)
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Output: logger,
+	}))
 
 	rest.RegisterProtectedGroupAPI(e, conf, platformConn)
 	rest.RegisterAdminGroupAPI(e, conf, platformConn)
