@@ -1,1 +1,1 @@
-# mini_project_alterra1
+# Mini Project Alterra #1: Secondhand Glossary
