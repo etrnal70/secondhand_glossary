@@ -163,7 +163,6 @@ func (c *UserController) GetProfileDetailsController(ctx echo.Context) error {
 	userToken := ctx.Get("user").(*jwt.Token)
 	claims := userToken.Claims.(*j.CustomClaims)
 	userId := claims.UserID
-  fmt.Println(userId)
 
 	user, err := c.s.GetProfileDetails(userId)
 	if err != nil {

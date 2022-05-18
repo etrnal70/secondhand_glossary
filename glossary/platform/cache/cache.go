@@ -19,7 +19,7 @@ func InitCacheDB(c config.Config) *redis.Client {
 
   _, err := rdb.Ping(context.Background()).Result()
 	if err != nil {
-		fmt.Println("Error opening cache db connection: ", err)
+		log.Error("Error opening cache db connection: ", err)
 		os.Exit(1) // TODO Handle this better, eg. using loop to wait
 	}
   log.Info("Connected to redis instance")

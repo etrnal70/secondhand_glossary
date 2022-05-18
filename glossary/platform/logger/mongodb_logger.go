@@ -24,12 +24,11 @@ func InitLoggerDB(c config.Config) *mongo.Client {
 	logger_db, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(connString))
 
   if err != nil {
-    fmt.Println("Cannot connect to mongo: ", err)
+    log.Error("Cannot connect to mongo: ", err)
     os.Exit(1) // TODO Handle this better
   }
 
   log.Info("Connected to mongo instance")
-  // logsCollection := logger_db.Database(c.MONGO_DB_NAME).Collection("Logs")
 
   return logger_db
 }
