@@ -43,9 +43,7 @@ func (c *CategoryController) AddCategoryController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"category": newCategory,
-	})
+	return ctx.JSON(http.StatusOK, newCategory)
 }
 
 // DeleteCategory godoc
@@ -95,9 +93,7 @@ func (c *CategoryController) GetCategoriesController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"category": categories,
-	})
+	return ctx.JSON(http.StatusOK, categories)
 }
 
 // GetCategoryDevices godoc
@@ -127,7 +123,5 @@ func (c *CategoryController) GetCategoryDevicesController(ctx echo.Context) erro
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"category": devices,
-	})
+	return ctx.JSON(http.StatusOK, devices)
 }

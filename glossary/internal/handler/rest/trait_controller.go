@@ -43,10 +43,7 @@ func (c *TraitController) AddTraitController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Success adding new trait",
-		"trait":   newTrait,
-	})
+	return ctx.JSON(http.StatusOK, newTrait)
 }
 
 // EditTrait godoc
@@ -85,10 +82,7 @@ func (c *TraitController) EditTraitController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Success updating trait",
-		"trait":   newTrait,
-	})
+	return ctx.JSON(http.StatusOK, newTrait)
 }
 
 // GetTraits godoc
@@ -108,9 +102,7 @@ func (c *TraitController) GetTraitsController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"traits":  traits,
-	})
+	return ctx.JSON(http.StatusOK, traits)
 }
 
 // GetTraitDevices godoc
@@ -139,9 +131,7 @@ func (c *TraitController) GetTraitDevicesController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"devices": devices,
-	})
+	return ctx.JSON(http.StatusOK, devices)
 }
 
 // DeleteTrait godoc

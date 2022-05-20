@@ -45,9 +45,7 @@ func (c *DeviceController) AddDeviceController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"device":  newDevice,
-	})
+	return ctx.JSON(http.StatusOK, newDevice)
 }
 
 // AddDeviceLink godoc
@@ -87,9 +85,7 @@ func (c *DeviceController) AddDeviceLinkController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"link":    newLink,
-	})
+	return ctx.JSON(http.StatusOK, newLink)
 }
 
 // AddDeviceReview godoc
@@ -134,9 +130,7 @@ func (c *DeviceController) AddDeviceReviewController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"review":  newReview,
-	})
+	return ctx.JSON(http.StatusOK, newReview)
 }
 
 // AddDeviceTrait godoc
@@ -176,9 +170,7 @@ func (c *DeviceController) AddDeviceTraitController(ctx echo.Context) error {
 			"message": "Error adding device's trait : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"device":  newDevice,
-	})
+	return ctx.JSON(http.StatusOK, newDevice)
 }
 
 // DeleteDevice godoc
@@ -373,9 +365,7 @@ func (c *DeviceController) EditDeviceController(ctx echo.Context) error {
 			"message": "Error updating device : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"device":  newDevice,
-	})
+	return ctx.JSON(http.StatusOK, newDevice)
 }
 
 // EditDeviceLink godoc
@@ -424,9 +414,7 @@ func (c *DeviceController) EditDeviceLinkController(ctx echo.Context) error {
 			"message": "Error updating device's link : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"device":  newLink,
-	})
+	return ctx.JSON(http.StatusOK, newLink)
 }
 
 // EditDeviceReview godoc
@@ -475,9 +463,7 @@ func (c *DeviceController) EditDeviceReviewController(ctx echo.Context) error {
 			"message": "Error updating device's review : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"review":  newReview,
-	})
+	return ctx.JSON(http.StatusOK, newReview)
 }
 
 // GetDevice godoc
@@ -506,9 +492,7 @@ func (c *DeviceController) GetDeviceController(ctx echo.Context) error {
 			"message": "Error getting device : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"device":  device,
-	})
+	return ctx.JSON(http.StatusOK, device)
 }
 
 // GetDeviceLink godoc
@@ -545,9 +529,7 @@ func (c *DeviceController) GetDeviceLinkController(ctx echo.Context) error {
 			"message": "Error getting device's link : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"link":    link,
-	})
+	return ctx.JSON(http.StatusOK, link)
 }
 
 // GetDeviceLinks godoc
@@ -577,9 +559,7 @@ func (c *DeviceController) GetDeviceLinksController(ctx echo.Context) error {
 			"message": "Error getting device's links : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"link":    links,
-	})
+	return ctx.JSON(http.StatusOK, links)
 }
 
 // GetDeviceReview godoc
@@ -618,9 +598,7 @@ func (c *DeviceController) GetDeviceReviewController(ctx echo.Context) error {
 			"message": "Error getting device's review : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"review":  review,
-	})
+	return ctx.JSON(http.StatusOK, review)
 }
 
 // GetDeviceReviews godoc
@@ -649,9 +627,7 @@ func (c *DeviceController) GetDeviceReviewsController(ctx echo.Context) error {
 			"message": "Error getting device's reviews : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"reviews": reviews,
-	})
+	return ctx.JSON(http.StatusOK, reviews)
 }
 
 // GetDeviceTraits godoc
@@ -680,9 +656,7 @@ func (c *DeviceController) GetDeviceTraitsController(ctx echo.Context) error {
 			"message": "Error getting device's traits : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"traits":  traits,
-	})
+	return ctx.JSON(http.StatusOK, traits)
 }
 
 // GetDevices godoc
@@ -700,9 +674,7 @@ func (c *DeviceController) GetDevicesController(ctx echo.Context) error {
 			"message": "Error getting devices : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"devices": devices,
-	})
+	return ctx.JSON(http.StatusOK, devices)
 }
 
 // EditDeviceScore godoc
@@ -741,9 +713,7 @@ func (c *DeviceController) EditDeviceScoreController(ctx echo.Context) error {
 			"message": "Error updating device's score : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"score":   newScore,
-	})
+	return ctx.JSON(http.StatusOK, newScore)
 }
 
 // GetDeviceScore godoc
@@ -773,7 +743,5 @@ func (c *DeviceController) GetDeviceScoreController(ctx echo.Context) error {
 			"message": "Error getting device's score : " + err.Error(),
 		})
 	}
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"score":   score,
-	})
+	return ctx.JSON(http.StatusOK, score)
 }

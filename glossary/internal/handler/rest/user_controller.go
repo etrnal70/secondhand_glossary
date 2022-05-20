@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"fmt"
 	"net/http"
 	"secondhand_glossary/internal/config"
 	"secondhand_glossary/internal/domain"
@@ -36,9 +35,7 @@ func (c *UserController) GetUsersController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"users":   users,
-	})
+	return ctx.JSON(http.StatusOK, users)
 }
 
 // DeleteUser godoc
@@ -97,7 +94,7 @@ func (c *UserController) RegisterController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
-  }
+	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"access_token":  tokenDetails.AccessToken,
@@ -115,7 +112,7 @@ func (c *UserController) RegisterController(ctx echo.Context) error {
 // @Failure 500 {object} map[string]interface{}
 // @Router /user/login [post]
 func (c *UserController) LoginController(ctx echo.Context) error {
-  // TODO Detect if token exist
+	// TODO Detect if token exist
 	data := model.UserLogin{}
 	ctx.Bind(&data)
 
@@ -133,7 +130,7 @@ func (c *UserController) LoginController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
-  }
+	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"access_token":  tokenDetails.AccessToken,
@@ -155,9 +152,7 @@ func (c *UserController) UpdateProfileController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-    "user": user,
-	})
+	return ctx.JSON(http.StatusOK, user)
 }
 
 // GetProfileDetails godoc
@@ -181,8 +176,5 @@ func (c *UserController) GetProfileDetailsController(ctx echo.Context) error {
 		})
 	}
 
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"user": user,
-	})
+	return ctx.JSON(http.StatusOK, user)
 }
-
