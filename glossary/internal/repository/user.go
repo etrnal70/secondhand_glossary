@@ -13,17 +13,17 @@ type userRepoDriver struct {
 }
 
 func (d *userRepoDriver) GetUserProfile(userId uint) (user model.User, err error) {
-	err = d.DB.Find(&user, userId).Error
+	err = d.DB.Omit("Password").Find(&user, userId).Error
 	return
 }
 
 func (d *userRepoDriver) GetUser(u model.UserLogin) (user model.User, err error) {
-	err = d.DB.Where("email = ? AND  password = ?", u.Email, u.Password).First(&user).Error
+	err = d.DB.Where("email = ? AND  password = ?", u.Email, u.Password).Omit("Password").Take(&user).Error
 	return
 }
 
 func (d *userRepoDriver) GetUsers() (users []model.User, err error) {
-	err = d.DB.Find(&users).Error
+	err = d.DB.Omit("Password").Find(&users).Error
 	return
 }
 
