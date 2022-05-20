@@ -10,6 +10,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
 type DeviceController struct {
@@ -30,6 +31,7 @@ func (c *DeviceController) AddDeviceController(ctx echo.Context) error {
 	device := model.Device{}
 	err := ctx.Bind(&device)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -37,6 +39,7 @@ func (c *DeviceController) AddDeviceController(ctx echo.Context) error {
 
 	newDevice, err := c.s.AddDevice(device)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting data : " + err.Error(),
 		})
@@ -61,6 +64,7 @@ func (c *DeviceController) AddDeviceLinkController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -69,6 +73,7 @@ func (c *DeviceController) AddDeviceLinkController(ctx echo.Context) error {
 	link := model.Link{DeviceID: uint(deviceId)}
 	err = ctx.Bind(&link)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -76,6 +81,7 @@ func (c *DeviceController) AddDeviceLinkController(ctx echo.Context) error {
 
 	newLink, err := c.s.AddDeviceLink(link)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting data : " + err.Error(),
 		})
@@ -105,6 +111,7 @@ func (c *DeviceController) AddDeviceReviewController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -113,6 +120,7 @@ func (c *DeviceController) AddDeviceReviewController(ctx echo.Context) error {
 	review := model.Review{UserID: userId, DeviceID: uint(deviceId)}
 	err = ctx.Bind(&review)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -120,6 +128,7 @@ func (c *DeviceController) AddDeviceReviewController(ctx echo.Context) error {
 
 	newReview, err := c.s.AddDeviceReview(review)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error inserting review : " + err.Error(),
 		})
@@ -145,6 +154,7 @@ func (c *DeviceController) AddDeviceTraitController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -153,6 +163,7 @@ func (c *DeviceController) AddDeviceTraitController(ctx echo.Context) error {
 	traitIdStr := ctx.Param("trait_id")
 	traitId, err := strconv.Atoi(traitIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -160,6 +171,7 @@ func (c *DeviceController) AddDeviceTraitController(ctx echo.Context) error {
 
 	newDevice, err := c.s.AddDeviceTrait(uint(deviceId), uint(traitId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error adding device's trait : " + err.Error(),
 		})
@@ -182,6 +194,7 @@ func (c *DeviceController) DeleteDeviceController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -189,6 +202,7 @@ func (c *DeviceController) DeleteDeviceController(ctx echo.Context) error {
 
 	err = c.s.DeleteDevice(uint(deviceId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error deleting device : " + err.Error(),
 		})
@@ -212,6 +226,7 @@ func (c *DeviceController) DeleteDeviceLinkController(ctx echo.Context) error {
 	// deviceIdStr := ctx.Param("device_id")
 	// deviceId, err := strconv.Atoi(deviceIdStr)
 	// if err != nil {
+	// log.Error(err)
 	// 	return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 	// 		"message": "Error on request parameter : " + err.Error(),
 	// 	})
@@ -220,6 +235,7 @@ func (c *DeviceController) DeleteDeviceLinkController(ctx echo.Context) error {
 	linkIdStr := ctx.Param("trait_id")
 	linkId, err := strconv.Atoi(linkIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -227,6 +243,7 @@ func (c *DeviceController) DeleteDeviceLinkController(ctx echo.Context) error {
 
 	err = c.s.DeleteDeviceLink(uint(linkId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error deleting device's link : " + err.Error(),
 		})
@@ -251,6 +268,7 @@ func (c *DeviceController) DeleteDeviceReviewController(ctx echo.Context) error 
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -259,6 +277,7 @@ func (c *DeviceController) DeleteDeviceReviewController(ctx echo.Context) error 
 	reviewIdStr := ctx.Param("review_id")
 	reviewId, err := strconv.Atoi(reviewIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -266,6 +285,7 @@ func (c *DeviceController) DeleteDeviceReviewController(ctx echo.Context) error 
 
 	err = c.s.DeleteDeviceReview(model.Review{ID: uint(reviewId), DeviceID: uint(deviceId)})
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error deleting device's review : " + err.Error(),
 		})
@@ -290,6 +310,7 @@ func (c *DeviceController) DeleteDeviceTraitController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -298,6 +319,7 @@ func (c *DeviceController) DeleteDeviceTraitController(ctx echo.Context) error {
 	traitIdStr := ctx.Param("trait_id")
 	traitId, err := strconv.Atoi(traitIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -305,6 +327,7 @@ func (c *DeviceController) DeleteDeviceTraitController(ctx echo.Context) error {
 
 	err = c.s.DeleteDeviceTrait(uint(deviceId), uint(traitId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error removing device from trait : " + err.Error(),
 		})
@@ -328,6 +351,7 @@ func (c *DeviceController) EditDeviceController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -336,6 +360,7 @@ func (c *DeviceController) EditDeviceController(ctx echo.Context) error {
 	device := model.Device{ID: uint(deviceId)}
 	err = ctx.Bind(&device)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -343,6 +368,7 @@ func (c *DeviceController) EditDeviceController(ctx echo.Context) error {
 
 	newDevice, err := c.s.EditDevice(device)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error updating device : " + err.Error(),
 		})
@@ -367,6 +393,7 @@ func (c *DeviceController) EditDeviceLinkController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -375,6 +402,7 @@ func (c *DeviceController) EditDeviceLinkController(ctx echo.Context) error {
 	linkIdStr := ctx.Param("link_id")
 	linkId, err := strconv.Atoi(linkIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -383,6 +411,7 @@ func (c *DeviceController) EditDeviceLinkController(ctx echo.Context) error {
 	link := model.Link{}
 	err = ctx.Bind(&link)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -390,6 +419,7 @@ func (c *DeviceController) EditDeviceLinkController(ctx echo.Context) error {
 
 	newLink, err := c.s.EditDeviceLink(model.Link{ID: uint(linkId), DeviceID: uint(deviceId)})
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error updating device's link : " + err.Error(),
 		})
@@ -414,6 +444,7 @@ func (c *DeviceController) EditDeviceReviewController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -422,6 +453,7 @@ func (c *DeviceController) EditDeviceReviewController(ctx echo.Context) error {
 	reviewIdStr := ctx.Param("review_id")
 	reviewId, err := strconv.Atoi(reviewIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -430,6 +462,7 @@ func (c *DeviceController) EditDeviceReviewController(ctx echo.Context) error {
 	review := model.Review{ID: uint(reviewId), DeviceID: uint(deviceId)}
 	err = ctx.Bind(&review)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -437,6 +470,7 @@ func (c *DeviceController) EditDeviceReviewController(ctx echo.Context) error {
 
 	newReview, err := c.s.EditDeviceReview(review)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error updating device's review : " + err.Error(),
 		})
@@ -459,6 +493,7 @@ func (c *DeviceController) GetDeviceController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -466,6 +501,7 @@ func (c *DeviceController) GetDeviceController(ctx echo.Context) error {
 
 	device, err := c.s.GetDevice(uint(deviceId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device : " + err.Error(),
 		})
@@ -504,6 +540,7 @@ func (c *DeviceController) GetDeviceLinkController(ctx echo.Context) error {
 
 	link, err := c.s.GetDeviceLink(uint(deviceId), uint(linkId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device's link : " + err.Error(),
 		})
@@ -527,6 +564,7 @@ func (c *DeviceController) GetDeviceLinksController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -534,6 +572,7 @@ func (c *DeviceController) GetDeviceLinksController(ctx echo.Context) error {
 
 	links, err := c.s.GetDeviceLinks(uint(deviceId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device's links : " + err.Error(),
 		})
@@ -557,6 +596,7 @@ func (c *DeviceController) GetDeviceReviewController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -565,6 +605,7 @@ func (c *DeviceController) GetDeviceReviewController(ctx echo.Context) error {
 	reviewIdStr := ctx.Param("review_id")
 	reviewId, err := strconv.Atoi(reviewIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -572,6 +613,7 @@ func (c *DeviceController) GetDeviceReviewController(ctx echo.Context) error {
 
 	review, err := c.s.GetDeviceReview(uint(deviceId), uint(reviewId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device's review : " + err.Error(),
 		})
@@ -594,6 +636,7 @@ func (c *DeviceController) GetDeviceReviewsController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -601,6 +644,7 @@ func (c *DeviceController) GetDeviceReviewsController(ctx echo.Context) error {
 
 	reviews, err := c.s.GetDeviceReviews(uint(deviceId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device's reviews : " + err.Error(),
 		})
@@ -623,6 +667,7 @@ func (c *DeviceController) GetDeviceTraitsController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -630,6 +675,7 @@ func (c *DeviceController) GetDeviceTraitsController(ctx echo.Context) error {
 
 	traits, err := c.s.GetDeviceTraits(uint(deviceId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device's traits : " + err.Error(),
 		})
@@ -649,6 +695,7 @@ func (c *DeviceController) GetDeviceTraitsController(ctx echo.Context) error {
 func (c *DeviceController) GetDevicesController(ctx echo.Context) error {
 	devices, err := c.s.GetDevices()
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting devices : " + err.Error(),
 		})
@@ -672,6 +719,7 @@ func (c *DeviceController) EditDeviceScoreController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -680,6 +728,7 @@ func (c *DeviceController) EditDeviceScoreController(ctx echo.Context) error {
 	score := model.Scores{DeviceID: uint(deviceId)}
 	err = ctx.Bind(&score)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -687,6 +736,7 @@ func (c *DeviceController) EditDeviceScoreController(ctx echo.Context) error {
 
 	newScore, err := c.s.EditDeviceScore(score)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error updating device's score : " + err.Error(),
 		})
@@ -710,6 +760,7 @@ func (c *DeviceController) GetDeviceScoreController(ctx echo.Context) error {
 	deviceIdStr := ctx.Param("device_id")
 	deviceId, err := strconv.Atoi(deviceIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -717,6 +768,7 @@ func (c *DeviceController) GetDeviceScoreController(ctx echo.Context) error {
 
 	score, err := c.s.GetDeviceScore(uint(deviceId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting device's score : " + err.Error(),
 		})

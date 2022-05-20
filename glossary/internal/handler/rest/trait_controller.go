@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
 type TraitController struct {
@@ -28,6 +29,7 @@ func (c *TraitController) AddTraitController(ctx echo.Context) error {
 	trait := model.Trait{}
 	err := ctx.Bind(&trait)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -35,6 +37,7 @@ func (c *TraitController) AddTraitController(ctx echo.Context) error {
 
 	newTrait, err := c.s.AddTrait(trait)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error adding new trait : " + err.Error(),
 		})
@@ -59,6 +62,7 @@ func (c *TraitController) EditTraitController(ctx echo.Context) error {
 	traitIdStr := ctx.Param("trait_id")
 	traitId, err := strconv.Atoi(traitIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -67,6 +71,7 @@ func (c *TraitController) EditTraitController(ctx echo.Context) error {
 	trait := model.Trait{ID: uint(traitId)}
 	err = ctx.Bind(&trait)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -74,6 +79,7 @@ func (c *TraitController) EditTraitController(ctx echo.Context) error {
 
 	newTrait, err := c.s.EditTrait(trait)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error updating trait : " + err.Error(),
 		})
@@ -96,6 +102,7 @@ func (c *TraitController) EditTraitController(ctx echo.Context) error {
 func (c *TraitController) GetTraitsController(ctx echo.Context) error {
 	traits, err := c.s.GetTraits()
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting traits : " + err.Error(),
 		})
@@ -118,6 +125,7 @@ func (c *TraitController) GetTraitDevicesController(ctx echo.Context) error {
 	traitIdStr := ctx.Param("trait_id")
 	traitId, err := strconv.Atoi(traitIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -125,6 +133,7 @@ func (c *TraitController) GetTraitDevicesController(ctx echo.Context) error {
 
 	devices, err := c.s.GetTraitDevices(uint(traitId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting trait's devices : " + err.Error(),
 		})
@@ -147,6 +156,7 @@ func (c *TraitController) DeleteTraitController(ctx echo.Context) error {
 	traitIdStr := ctx.Param("trait_id")
 	traitId, err := strconv.Atoi(traitIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -154,6 +164,7 @@ func (c *TraitController) DeleteTraitController(ctx echo.Context) error {
 
 	err = c.s.DeleteTrait(uint(traitId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error deleting trait : " + err.Error(),
 		})

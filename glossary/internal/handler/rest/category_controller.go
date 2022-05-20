@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
 type CategoryController struct {
@@ -28,6 +29,7 @@ func (c *CategoryController) AddCategoryController(ctx echo.Context) error {
 	category := model.Category{}
 	err := ctx.Bind(&category)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request :" + err.Error(),
 		})
@@ -35,6 +37,7 @@ func (c *CategoryController) AddCategoryController(ctx echo.Context) error {
 
 	newCategory, err := c.s.AddCategory(category)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error adding category : " + err.Error(),
 		})
@@ -57,12 +60,14 @@ func (c *CategoryController) DeleteCategoryController(ctx echo.Context) error {
 	categoryIdStr := ctx.Param("category_id")
 	categoryId, err := strconv.Atoi(categoryIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
 	}
 	err = c.s.DeleteCategory(uint(categoryId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error deleting category : " + err.Error(),
 		})
@@ -84,6 +89,7 @@ func (c *CategoryController) DeleteCategoryController(ctx echo.Context) error {
 func (c *CategoryController) GetCategoriesController(ctx echo.Context) error {
 	categories, err := c.s.GetCategories()
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting categories : " + err.Error(),
 		})
@@ -107,6 +113,7 @@ func (c *CategoryController) GetCategoryDevicesController(ctx echo.Context) erro
 	categoryIdStr := ctx.Param("category_id")
 	categoryId, err := strconv.Atoi(categoryIdStr)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Error on request parameter : " + err.Error(),
 		})
@@ -114,6 +121,7 @@ func (c *CategoryController) GetCategoryDevicesController(ctx echo.Context) erro
 
 	devices, err := c.s.GetCategoryDevices(uint(categoryId))
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Error getting category devices : " + err.Error(),
 		})

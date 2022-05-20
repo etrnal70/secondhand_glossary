@@ -11,6 +11,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
 type UserController struct {
@@ -29,6 +30,7 @@ type UserController struct {
 func (c *UserController) GetUsersController(ctx echo.Context) error {
 	users, err := c.s.GetUsers()
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
@@ -51,11 +53,13 @@ func (c *UserController) DeleteUserController(ctx echo.Context) error {
 	user_str := ctx.Param("user_id")
 	user_id, err := strconv.Atoi(user_str)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err,
 		})
 	}
 	if err := c.s.DeleteUser(uint(user_id)); err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
@@ -81,13 +85,15 @@ func (c *UserController) RegisterController(ctx echo.Context) error {
 
 	user, err := c.s.Register(data)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
 	}
 
 	tokenDetails, err := j.CreateToken(user.ID, false, c.conf)
-  if err != nil {
+	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
@@ -115,13 +121,15 @@ func (c *UserController) LoginController(ctx echo.Context) error {
 
 	user, err := c.s.Login(data)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err,
 		})
 	}
 
 	tokenDetails, err := j.CreateToken(user.ID, false, c.conf)
-  if err != nil {
+	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
@@ -140,7 +148,8 @@ func (c *UserController) UpdateProfileController(ctx echo.Context) error {
 	ctx.Bind(&data)
 
 	user, err := c.s.UpdateProfile(data)
-  if err != nil {
+	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})
@@ -166,6 +175,7 @@ func (c *UserController) GetProfileDetailsController(ctx echo.Context) error {
 
 	user, err := c.s.GetProfileDetails(userId)
 	if err != nil {
+		log.Error(err)
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err,
 		})

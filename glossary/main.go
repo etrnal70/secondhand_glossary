@@ -8,6 +8,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	log "github.com/sirupsen/logrus"
 )
 
 // @title           Secondhand Glossary API
@@ -32,9 +33,17 @@ func main() {
 	platformConn := platform.InitPlatform(conf)
 	defer platformConn.Close()
 
-	logger := logger.NewLogger(platformConn)
+	mongoLogger := logger.NewMongoLogger(platformConn)
+
+	// MongoLogger global
+	log.New()
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetLevel(log.InfoLevel)
+	log.SetOutput(mongoLogger)
+
+	// MongoLogger middleware
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Output: logger,
+		Output: mongoLogger,
 	}))
 
 	rest.RegisterProtectedGroupAPI(e, conf, platformConn)
