@@ -12,8 +12,8 @@ type userService struct {
 }
 
 func (s *userService) GetProfileDetails(userId uint) (user model.User, err error) {
-  user, err = s.Repo.GetUserProfile(userId)
-  return
+	user, err = s.Repo.GetUserProfile(userId)
+	return
 }
 
 func (s *userService) Login(l model.UserLogin) (user model.User, err error) {
@@ -38,13 +38,13 @@ func (s *userService) Register(r model.UserRegister) (user model.User, err error
 }
 
 func (s *userService) UpdateProfile(u model.User) (user model.User, err error) {
-  user, err = s.Repo.UpdateUserProfile(u)
-  return
+	user, err = s.Repo.UpdateUserProfile(u)
+	return
 }
 
 func (s *userService) DeleteUser(userId uint) (err error) {
-  err = s.Repo.DeleteUser(userId)
-  return
+	err = s.Repo.DeleteUser(userId)
+	return
 }
 
 func (s *userService) GetUser(u model.UserLogin) (user model.User, err error) {
